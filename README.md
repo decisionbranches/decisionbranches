@@ -1,25 +1,25 @@
-# Fast Search-By-Classification Framework for Large-Scale Data
-This repository contains the source code for the paper *"Fast Search-By-Classification Framework for Large-Scale Data"*. We show that our *Search-by-Classification* model (see left figure) can heavily speed up rare-object searches in comparison to classic decision tree models. Unlike traditional approaches where the whole data needs to be scanned, our search approach instead uses multidimensional index structures to only load the relevant data. One use case for our search approach is looking for rare objects in massive catalogs of satellite imagery. On the right figure, we show a first **prototype** of our approach embedded in an image search engine (**our prototype is available via this [link](https://web.search-engine.space/)**). In the example, we search for wind turbines (red rectangle) by selecting rare as well as some non-rare patches (purple rectangle) that should be excluded from the search. The response for our search is returned within seconds even for large data catalogs due to our index-supported query processing.
+# Fast Search-By-Classification for Large-Scale Databases Using Index-Aware Decision Trees and Random Forests
+This repository contains the source code for the paper *"Fast Search-By-Classification for Large-Scale Databases Using Index-Aware Decision Trees and Random Forests"*. We show that our *Search-by-Classification* model (see left figure) can heavily speed up rare-object searches in comparison to classic decision tree models. Unlike traditional approaches where the whole data needs to be scanned, our search approach instead uses multidimensional index structures to only load the relevant data. One use case for our search approach is looking for rare objects in massive catalogs of satellite imagery. In the right figure, we show the **prototype** of our approach embedded in an image search engine (**our prototype is available via this [link](https://web.search-engine.space/)**). In the example, we search for wind turbines (red rectangle) by selecting rare as well as some non-rare patches (purple rectangle) that should be excluded from the search. The response for our search is returned within seconds even for large data catalogs due to our index-supported query processing.
 
 <p align="middle">
   <kbd>
     <img src="figures/figure.png" height="300" \>
   </kbd>
   <kbd>
-    <img src="figures/prototype_searchengine.png" height="200" \>
+    <img src="figures/prototype_searchengine.png" height="300" \>
   </kbd>
 </p>
 
 ## Getting started
 To run the code, **Python3.8** is required. To run the code, we provide you with three options:
 
-1) Try out a first example in **Google Colab** (by clicking on the button on the right):
+1) Try out the first example in **Google Colab** (by clicking on the button on the right):
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/decisionbranches/decisionbranches/blob/master/examples/pipeline.ipynb)
 
 For the following options clone the repository first with:\
 `git clone https://github.com/decisionbranches/decisionbranches.git`
 
-2) **Virtuel environment**:
+2) **Virtual environment**:
 ```
 python -m venv venv
 source venv/bin/activate

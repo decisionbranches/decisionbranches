@@ -11,7 +11,7 @@ cdef extern from "math.h":
 cdef int sum_iarr(int[::1] arr) nogil:
     cdef int count = 0  
     cdef int i
-    for i in prange(arr.shape[0]):
+    for i in prange(arr.shape[0],nogil=True):
         count += arr[i]
     return count
 
@@ -21,7 +21,7 @@ cdef int sum_iarr(int[::1] arr) nogil:
 cdef int sum_iarr_pt(int* arr,int L) nogil:
     cdef int count = 0  
     cdef int i
-    for i in prange(L):
+    for i in prange(L,nogil=True):
         count += arr[i]
     return count
 
@@ -31,7 +31,7 @@ cdef int sum_iarr_pt(int* arr,int L) nogil:
 cdef void find_extreme_values(double[::1,:] x,double* x_max,double* x_min) nogil:
     cdef int i,j
     cdef double MAX,MIN
-    for i in prange(x.shape[1]):
+    for i in range(x.shape[1]):
         MAX = -INFINITY
         MIN = INFINITY
         for j in range(x.shape[0]):
@@ -122,7 +122,7 @@ cdef int unique(double[::1] arr,int pointer) nogil:
         tmp[j] = arr[pointer-1]
         j += 1
 
-        for i in prange(j):
+        for i in range(j):
             arr[i] = tmp[i]
             
         return j

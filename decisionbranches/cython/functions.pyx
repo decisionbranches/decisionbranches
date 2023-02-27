@@ -95,6 +95,8 @@ cdef int create_box(double[:,::1] bbox,int[::1] pts_idx,double [::1,:] x, int[::
     cdef int allp = 0
     cdef double outer, inner,border
     
+    cdef double closest_min,closest_max
+    
     #Set pt_idx to false
     pts_idx[pt_idx] = 0
     
@@ -102,27 +104,32 @@ cdef int create_box(double[:,::1] bbox,int[::1] pts_idx,double [::1,:] x, int[::
         f = feats[j]
         min_pt,max_pt,eq_count = 0,0,0
 
+        closest_min = -INFINITY
+        closest_max = INFINITY
+        
         if allp == 0:
             for i in range(pts_idx.shape[0]):
                 # if either pts_idx is still true or it is the first round and not the center point to reset the idxs 
                 if (pts_idx[i] == 1) or ((j == 0) and (i != pt_idx)):
                     if x[i,f] > x[pt_idx,f]:
-                        max_vals[max_pt] = x[i,f]
-                        #max_pointers[max_pt] = i
+                        #max_vals[max_pt] = x[i,f]
                         max_pt += 1
                         pts_idx[i] = 0
+                        if x[i,f] < closest_max:
+                            closest_max = x[i,f]
                     elif x[i,f] < x[pt_idx,f]:
-                        min_vals[min_pt] = x[i,f]
-                        #min_pointers[min_pt] = i
+                        #min_vals[min_pt] = x[i,f]
                         min_pt += 1
                         pts_idx[i] = 0
+                        if x[i,f] > closest_min:
+                            closest_min = x[i,f]
                     else:
                         eq_count += 1
                         pts_idx[i] = 1
 
+
         if max_pt > 0:
-            qsort(&max_vals[0], max_pt, max_vals.strides[0], &asc)
-            outer = max_vals[0]
+            outer = closest_max
             border = x[pt_idx,f] + (outer-x[pt_idx,f]) * split(1,seed) # max according to MER behaviour (only comes into play for first dimension or following dimension in case of duplicate values)
         else:
             if f > 0:
@@ -136,8 +143,7 @@ cdef int create_box(double[:,::1] bbox,int[::1] pts_idx,double [::1,:] x, int[::
         bbox[f,1] = border
             
         if min_pt > 0:
-            qsort(&min_vals[0], min_pt, min_vals.strides[0], &desc)
-            outer = min_vals[0]
+            outer = closest_min
             border = x[pt_idx,f] + (outer-x[pt_idx,f]) * split(1,seed) # max according to MER behaviour
         else:
             if f > 0:
