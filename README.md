@@ -3,10 +3,10 @@ This repository contains the source code for the paper *"Fast Search-By-Classifi
 
 <p align="middle">
   <kbd>
-    <img src="figures/figure.png" height="300" \>
+    <img src="figures/figure.png" height="250" \>
   </kbd>
   <kbd>
-    <img src="figures/prototype_searchengine.png" height="300" \>
+    <img src="figures/prototype_searchengine.png" height="250" \>
   </kbd>
 </p>
 
